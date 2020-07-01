@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block content %}
+{% include 'shared/_navbar.html' %}
+
 <h1>메인페이지</h1>
+<img src="{% static 'images/computer.png' %}">
+
 {% endblock %}
