@@ -6,7 +6,13 @@
         새로운 글 작성하기
         </h1>
 
-        <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'posts:new' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="작성하기" class="btn btn-primary">
+        </form>
+
+        <!-- <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
             <div class="form-group">
                 <label>글 제목</label>
@@ -20,7 +26,8 @@
             </div>
 
             <input type="submit" value="글 작성" class="btn btn-outline-primary">
-        </form>
+        </form> -->
     </div>
 
+    
 {% endblock %}

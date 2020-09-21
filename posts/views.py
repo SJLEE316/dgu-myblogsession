@@ -1,18 +1,27 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib.auth.decorators import login_required
+from .forms import PostForm
 
 def new(request):
-    return render(request, 'posts/new.html')
+    form = PostForm()
+    return render(request, 'posts/new.html', {'form': form})
 
 def create(request):
+    # if request.method == "POST":
+    #     title=request.POST.get('title')
+    #     content=request.POST.get('content')
+    #     image=request.FILES.get('image')
+    #     user = request.user
+    #     Post.objects.create(title=title, content=content, image=image, user=user)
+    # return redirect('posts:main')
+
     if request.method == "POST":
-        title=request.POST.get('title')
-        content=request.POST.get('content')
-        image=request.FILES.get('image')
-        user = request.user
-        Post.objects.create(title=title, content=content, image=image, user=user)
-    return redirect('posts:main')
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(user=request.user)
+        return redirect('posts:main')
+
 
 def main(request):
     posts = Post.objects.all()
